@@ -13,16 +13,19 @@
         @next-step="nextStep"
         @prev-step="prevStep"
     />
+    <formResult v-if="currentStep === 3" @prev-step="prevStep" />
 </template>
 
 <script>
 import formInfo from "@/components/treecon-form/form-info.vue";
 import formSelection from "@/components/treecon-form/form-selection.vue";
+import formResult from "@/components/treecon-form/form-result.vue";
 
 export default {
     components: {
         formInfo,
         formSelection,
+        formResult,
     },
     data() {
         return {
