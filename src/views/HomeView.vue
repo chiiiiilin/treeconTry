@@ -1,18 +1,70 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <div class="progress-bar">
+        <div
+            class="progress-bar-step"
+            v-for="step in 4"
+            :class="{ thisStep: currentStep === step }"
+            :key="step"
+        ></div>
+    </div>
+    <formInfo v-if="currentStep === 1" @next-step="nextStep" />
+    <formSelection
+        v-if="currentStep === 2"
+        @next-step="nextStep"
+        @prev-step="prevStep"
+    />
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import formInfo from "@/components/treecon-form/form-info.vue";
+import formSelection from "@/components/treecon-form/form-selection.vue";
 
 export default {
-  name: 'HomeView',
-  components: {
-    HelloWorld
-  }
-}
+    components: {
+        formInfo,
+        formSelection,
+    },
+    data() {
+        return {
+            currentStep: 1,
+        };
+    },
+    methods: {
+        nextStep() {
+            this.currentStep++;
+        },
+        prevStep() {
+            this.currentStep--;
+        },
+    },
+};
 </script>
+
+<style lang="scss" scoped>
+.progress-bar {
+    display: flex;
+    justify-content: center;
+    position: relative;
+
+    &::before {
+        content: "";
+        width: 80px;
+        height: 5px;
+        position: absolute;
+        background-color: #f7e6cd;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: -1;
+    }
+    .progress-bar-step {
+        width: 20px;
+        height: 20px;
+        background-color: #f7e6cd;
+        border-radius: 50px;
+        margin: 5px;
+    }
+    .thisStep {
+        background-color: #f3c580;
+    }
+}
+</style>
